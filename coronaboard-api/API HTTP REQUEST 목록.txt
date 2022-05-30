@@ -1,0 +1,21 @@
+curl --location --request POST "http://localhost:8080/global-stats" ^
+--header "Content-Type: application/json" ^
+--data-raw "{\"cc\": \"KR\",\"date\": \"2020-02-14\",\"confirmed\": 28,\"death\": 0,\"negative\": 6679,\"released\": 7,\"tested\": 7242,\"testing\": 535}"
+
+curl --request GET "http://localhost:8080/global-stats"
+
+curl --location --request DELETE "http://localhost:8080/global-stats" ^
+--header "Content-Type: application/json" ^
+--data-raw "{\"cc\":\"KR\",\"date\":\"2020-02-14\"}"
+
+curl --location --request POST "http://localhost:8080/global-stats" ^
+--header "Content-Type: application/json" ^
+--data-raw "{\"cc\": \"KR\",\"date\": \"2020-02-14\",\"confirmed\": \"hello\"}"
+
+curl --location --request POST "http://localhost:8080/key-value" ^
+--header "Content-Type: application/json" ^
+--data-raw "{\"id\": 20171759,\"key\": \"JaeHyun Shin\",\"value\": \"17cm\"}"
+
+curl --request GET "http://localhost:8080/key-value/JaeHyun%20Shin"
+
+curl --request DELETE "http://localhost:8080/key-value/JaeHyun%20Shin"

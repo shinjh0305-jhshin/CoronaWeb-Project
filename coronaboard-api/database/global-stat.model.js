@@ -1,6 +1,8 @@
-const { DataTypes } = require('sequelize');
+//국가별 통계 데이터를 저장하고 불러오는 API
 
-module.exports = (sequelize) => {
+const { DataTypes } = require('sequelize'); //이 sequelize는 node_modules에 들어있는 모듈을 의미한다.
+
+module.exports = (sequelize) => { //이 sequelize가 index.js에서 전달한 sequelize 객체를 의미한다.
     return sequelize.define (
         'GlobalStat', //객체 모델 이름
         { //모델의 속성 목록

@@ -18,4 +18,5 @@ module.exports = { //외부 모듈에서 사용할 수 있도록 내보내기
     sequelize,
     //생성 된 객체 모델(들)을 아래에 적는다
     GlobalStat: require('./global-stat.model')(sequelize),  //sequelize 인스턴스를 전달한다.
+    KeyValue: require('./key-value.model')(sequelize)
 }
