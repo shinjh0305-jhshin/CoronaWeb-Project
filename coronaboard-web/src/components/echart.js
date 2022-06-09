@@ -30,4 +30,6 @@ export function Echart(props) {
             //DOM에서 컴포넌트가 제거될 때, 컴포넌트 자체는 제거되지만, 그와 연결된 메모리는 제거되지 않을 수 있다.
         }
     }, [option]) //option 값이 변경될 때 마다 useEffect가 호출된다.
+
+    return <div css={wrapperCss} ref={chartRef}/>;
 }
