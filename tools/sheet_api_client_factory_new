@@ -1,0 +1,10 @@
+const fs = require('fs'); //파일 읽기 및 파일 쓰기 관련 모듈
+const readline = require('readline'); //stdin에서 한 줄씩 입력받는 모듈
+const { google } = require('googleapis'); //google API
+const { GoogleAuth } = require('google-auth-library');
+
+require('dotenv').config();
+
+const SCOPES = ['https://www.googleapis.com/auth/spreadsheets']; //필요한 scope(사용자한테 요구할 권한)를 전부 배열에 적는다.
+//const TOKEN_PATH = 'accessToken.json'; //사용자의 접근 권한 및 토큰을 저장할 파일명
+

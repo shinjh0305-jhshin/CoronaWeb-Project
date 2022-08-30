@@ -1,12 +1,11 @@
 const express = require('express');
-const bodyParser = require('body-parser'); //http request의 body를 파싱하는 기능
 const { sequelize } = require('./database');
 const globalStatController = require('./controller/global-stat.controller'); //컨트롤러 들고온다
 const keyValueController = require('./controller/key-value.controller'); //컨트롤러 들고온다
 
 async function launchServer() {
     const app = express(); //익스프레스 인스턴스
-    app.use(bodyParser.json()); //application/json을 Content-Type로 갖는 요청의 바디를 파싱하도록 설정
+    app.use(express.json()); //application/json을 Content-Type로 갖는 요청의 바디를 파싱하도록 설정
 
     app.get('/', (req, res) => {
         res.json({ message : 'Hello CoronaBoard!'});

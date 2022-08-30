@@ -51,7 +51,7 @@ function createGlobalStatWithPrevField(todayStats, yesterdayStats) { //어제와
         const cc = todayStat.cc;
         const yesterdayStat = yesterdayStatsByCc[cc];
 
-        if (yesterdayStat) {
+        if (yesterdayStat) { ///////////반드시 수정할것////////////////////
             return {
                 ...todayStat,
                 confirmedPrev: yesterdayStat.confirmed || 0,

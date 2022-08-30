@@ -28,19 +28,15 @@ module.exports = (sequelize) => { //이 sequelize가 index.js에서 전달한 se
                 type : DataTypes.INTEGER,
                 allowNull : true,
             },
-            released : { //완치자 수
+            severe : { //재원 위중증 환자 수
                 type : DataTypes.INTEGER,
                 allowNull : true,
             },
-            tested : { //총 검사자 수
-                type : DataTypes.INTEGER,
+            vaccinated : { //백신 접종 완료 수
+                type : DataTypes.DECIMAL(5, 2),
                 allowNull : true,
             },
-            testing : { //검사중 수
-                type : DataTypes.INTEGER,
-                allowNull : true,
-            },
-            negative : { //결과 음성 수
+            hospitalized : { //입원 환자 수
                 type : DataTypes.INTEGER,
                 allowNull : true,
             },
@@ -61,7 +57,6 @@ module.exports = (sequelize) => { //이 sequelize가 index.js에서 전달한 se
                 },
             ],
             timestamps : false, //타임스탬프 속성 자동으로 생성 안한다.
-
         }
     )
 }
