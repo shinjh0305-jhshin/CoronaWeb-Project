@@ -6,7 +6,7 @@ async function main() {
         const sheetApiClient = await SheetApiClientFactory.create();
         const downloader = new SheetDownloader(sheetApiClient);
 
-        const spreadsheetId = '1Qiq149cVh1uLwQTqg8bwg06acuPU652vx52kzfUkW-E';
+        const spreadsheetId = '1Tgt5JQdvZUAZy1S0qqoPepArOFIoTKvTz2nOHuA7Qik';
 
         const notice = await downloader.downloadToJson(spreadsheetId, 'notice', 'downloaded/notice.json');
         const countryInfo = await downloader.downloadToJson(spreadsheetId, 'countryInfo', 'downloaded/countryInfo.json');
