@@ -19,11 +19,16 @@ class DomesticCrawler {
         const resp = await this.client.get(url); //웹사이트에 접근해서 HTML을 가져온다.
         const $ = cheerio.load(resp.data);//html에 접근해서(resp.data) DOM으로 파싱한다(cheerio.load). 그리고 cheerio 객체로 만든다.
 
-        return {
+        const result = {
             basicStats: this._extractBasicStats($),
             byAge: this._extractByAge($),
             bySex: this._extractBySex($)
         };
+
+        result.basicStats.death = result.bySex.male.death + result.bySex.female.death;
+        result.basicStats.confirmed = result.bySex.male.confirmed + result.bySex.female.confirmed;
+
+        return result;
     }
 
     _extractBasicStats($) { //누적 검사 현황을 받는다.
@@ -37,14 +42,9 @@ class DomesticCrawler {
         })
 
         result = {
-            death: values[0],
             severe: values[1],
             hospitalized: values[2],
-            confirmed: values[3]
         };
-
-        console.log(result);
-
         return result;
     }
 
@@ -80,7 +80,7 @@ class DomesticCrawler {
             $(el)
                 .find('tbody tr')
                 .each((j, row) => {
-                    const cols = $(row).children; //모든 자식 요소(구분, 확진자, 사망자, 치명률) 가져온다
+                    const cols = $(row).children(); //모든 자식 요소(구분, 확진자, 사망자, 치명률) 가져온다
 
                     _.forEach(mapping, (fieldName, firstColumnText) => { //각 함수의 mapping이 firstColumnText : fieldName이다
                         if($(cols.get(0)).text() === firstColumnText) { //DB에 넣을 키 값을 선정한다.
@@ -109,4 +109,4 @@ class DomesticCrawler {
 module.exports = DomesticCrawler;
 
 const temp = new DomesticCrawler();
-temp.crawlStat();
+temp.crawlStat()

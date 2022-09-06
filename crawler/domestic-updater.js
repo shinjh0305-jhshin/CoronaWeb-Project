@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { format, utcToZonedTime } = require('date-fns-tz');
 const DomesticCrawler = require('./domestic-crawler');
+const DomesticVaccineCrawler = require('./vaccine-domestic-crawler');
 
 async function crawlAndUpdateDomestic(outputPath, apiClient) {
     let prevData = {};
@@ -23,7 +24,8 @@ async function crawlAndUpdateDomestic(outputPath, apiClient) {
     //크롤링 해온다!!!
     const newData = {
         crawledDate,
-        domesticStat: await domesticCrawler.crawlStat()
+        domesticStat: await domesticCrawler.crawlStat(),
+        domesticVaccine : await DomesticVaccineCrawler.crawlVaccine()
     }
 
     if (_.isEqual(newData, prevData)) { //예전 데이터랑 오늘 크롤링 한 데이터랑 똑같다.
@@ -34,12 +36,14 @@ async function crawlAndUpdateDomestic(outputPath, apiClient) {
     fs.writeFileSync(domesticStatPath, JSON.stringify(newData)); //새로 읽어온 값을 파일에 덮어쓴다.
 
     const newDomesticStat = newData.domesticStat; //새 데이터를 API에 넣을 수 있도록 예쁘게 만든다.
-    const {confirmed, released, death, tested, testing, negative} = newDomesticStat.basicStats; 
+    const {severe, hospitalized, death, confirmed} = newDomesticStat.basicStats; 
+    const {ratio : vaccinated} = newData.domesticVaccine;
+
 
     await apiClient.upsertGlobalStat({
         cc: 'KR',
         date: crawledDate,
-        confirmed, released, death, tested, testing, negative //confirmed: 456789 와 같은 형태로 담겨 있다.
+        severe, hospitalized, death, confirmed, vaccinated //confirmed: 456789 와 같은 형태로 담겨 있다.
     })
 
     const { byAge, bySex } = newDomesticStat;
@@ -49,4 +53,4 @@ async function crawlAndUpdateDomestic(outputPath, apiClient) {
     console.log('domesticStat updated Successfully');
 }
 
-module.exports = crawlAndUpdateDomestic;
+module.exports = { crawlAndUpdateDomestic };

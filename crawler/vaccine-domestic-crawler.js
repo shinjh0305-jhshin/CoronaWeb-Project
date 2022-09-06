@@ -19,8 +19,12 @@ async function crawlVaccine() {
         result[key] = parseInt(value[0]);
     })
 
+    const koreanPopulation = 51364934;
+    const ratio = parseFloat(result.secondCnt / koreanPopulation * 100).toPrecision(4);
+
+    result.ratio = parseFloat(ratio);
+
     return result;
 }
 
 module.exports = {crawlVaccine};
-
